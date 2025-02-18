@@ -1,12 +1,24 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+@import url('https://fonts.googleapis.com/css2?family={font}:ital,wght@0,100..900;1,100..900&display=swap');
 
 *, *:after, *:before { margin: 0; padding: 0; box-sizing: border-box}
 * {
-  	outline: 0;
+    outline: 0;
   	border: none;
   	font-size: 100%;
   	background: transparent;
   	vertical-align: baseline
+}
+
+:root {
+  	--background-color: {background_color};
+    --badge-size: {badgesSize}px;
+    --emote-size: {emoteSize}px;
+    --message-background-color: #E8F2FA;
+    --message-letter-spacing: 1px;
+    --message-font-family: '{font}', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --message-font-weight: 600;
+    --message-font-size: {font_size};
 }
 
 .main-container {
@@ -14,93 +26,101 @@
     height: 100vh;
   	display: flex;
     flex-wrap: nowrap;
-	flex-direction: column;
+		flex-direction: column;
   	justify-content: flex-end;
   	align-items: flex-start;
-    overflow: hidden;
-  	padding: 10px;
-  	scroll-behavior: smooth;
-  	-webkit-mask-image: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 5%, rgba(255,255,255,1) 90%, rgba(255,255,255,0) 100%);
-  	mask-image: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 5%, rgba(255,255,255,1) 90%, rgba(255,255,255,0) 100%);
-  	transition: all 200ms ease
+  	padding: 0 1rem 1rem;
+  	position: relative;
+  	-webkit-mask-image: linear-gradient(0deg, white 80%, transparent 100%);
+  	mask-image: linear-gradient(0deg, white 80%, transparent 100%);
+  	user-select: none;
+  	transition: all 1s;
 }
 
 .chat {
-  	z-index: 0;
-  	flex: 0 1 auto;
-	display: flex;
-	flex-direction: column;
+  	--animation: {chatAnimationIn} 500ms ease forwards, {chatAnimationOut} 500ms ease {message_hide_delay} forwards;
+  
+  	flex: 0 0;
+		display: flex;
+		flex-direction: column;
   	flex-wrap: nowrap;
     align-items: flex-start;
-  	margin-bottom: 10px;
+  	font-family: var(--message-font-family);
+  	animation: var(--animation);
+    -webkit-animation: var(--animation);
   	transition: all 100ms linear
 }
 .chat-header {
-  	--height-size: calc({headerFontSize} + 10px);
+  	--height-size: calc(var(--message-font-size) * 2);
+  	--color: #fff;
   
+  	z-index: 2;
   	flex: 1 0;
   	height: var(--height-size);
-	display: flex;
+		display: flex;
   	flex-wrap: nowrap;
-	flex-direction: row;
-	align-items: center;
-  	border-radius: 50px;
-  	padding: 10px 25px;
-  	margin-bottom: 5px;
-  	background-image: linear-gradient(0deg, rgba(255,255,255,.32), transparent);
-  	background-color: #111;
+		flex-direction: row;
+		align-items: center;
+  	border-radius: 10px;
+  	padding: 0 1rem;
+  	background-image: linear-gradient(0deg, rgba(0,0,0,.05) 60%, transparent 60%, transparent 100%);
+  	background-color: var(--color);
   	line-height: var(--height-size);
-  	font-family: '{headerFontName}', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  	letter-spacing: {headerLetterSpacing}px;
-  	font-weight: {headerFontWeight};
-	font-size: {headerFontSize}px;
-  	color: #fff;
+  	letter-spacing: calc(var(--message-letter-spacing) * 2);
+    font-weight: 700;
+    font-size: calc(var(--message-font-size) * 1.1);
+  	color: #FAFAFA;
+  	box-shadow: 0 6px 2px rgba(0,0,0,.1);
+  	transform: translateX(6px) translateY(12px) rotate(-0.5deg);
 }
 .chat-user-badges {
-  	--badges: 0;
-  
-  	flex: 0 0 calc(24px * var(--badges));
-	display: grid;
-  	grid-template-columns: repeat(var(--badges), 1fr);
-	column-gap: 10px;
+  	flex: 0 0 minmax(var(--emote-size), calc(var(--emote-size) * 4));
+		display: flex;
+  	flex-wrap: nowrap;
+		flex-direction: row;
+		align-items: center;
+  	overflow: hidden;
 }
 .chat-user-name {
   	flex: 1 0;
   	display: block;
   	overflow: hidden;
   	white-space: nowrap;
-  	padding: 0 10px;
+  	padding: 0 5px;
   	text-overflow: ellipsis;
 }
 .chat-user-badges > * {
-  	width: 24px;
-  	height: 24px;
+  	width: var(--badge-size);
+  	height: var(--badge-size);
   	display: block;
-	object-fit: cover;
+		object-fit: cover;
+}
+.chat-user-badges > :not(last-child) {
+    margin-right: 10px;
 }
 .chat-message {
-  	min-width: calc({messageFontSize}px * 4);
-  	padding: 20px;
-  	margin: 0 20px;
-  	border-radius: 10px;
-	background-color: #fff;
-  	font-family: '{messageFontName}', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  	box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
-  	position: relative
+  	z-index: 1;
+  	min-width: 100%;
+  	max-width: 100%;
+  	display: block;
+  	padding: 1rem;
+  	border-radius: 5px 10px 10px 10px;
+		background-color: var(--message-background-color);
+  	animation-delay: 2s;
 }
 .chat-message-content {
-  	min-height: calc({messageFontSize}px + 10px);
+  	flex: 0 0 100%;
   	display: flex;
     flex-wrap: wrap;
-	flex-direction: row;
+		flex-direction: row;
   	justify-content: flex-start;
   	align-items: center;
   	overflow: hidden;
-	line-height: calc({messageFontSize}px * 2);
-  	letter-spacing: {messageLetterSpacing}px;
-  	font-weight: {messageFontWeight};
-	font-size: {messageFontSize}px;
-	color: #000;
+		line-height: calc(var(--message-font-size) * 2);
+  	letter-spacing: var(--message-letter-spacing);
+  	font-weight: var(--message-font-weight);
+    font-size: var(--message-font-size);
+    color: #1A1A1A;
 }
 .chat-message-content .emote,
 .chat-message-content .mention,
@@ -119,22 +139,18 @@
   	font-weight: 700;
   	background-color: rgba(50,50,240,.1);
 }
+.chat-message-content .emote,
+.chat-message-content .emote > * {
+  	width: var(--emote-size);
+ 		height: auto;
+}
 .chat-message-content .emote {
-  	width: {emoteSize}px;
- 	height: auto;
+  	background-size: cover;
+  	background-repeat: no-repeat;
+}
+.chat-message-content .emote > * {
+  	object-fit: cover;
 }
 .chat-message-content .link {
   	font-weight: 300;
-}
-.chat-message::before {
-    content: '';
-    width: 24px;
-    height: 24px;
-    display: block;
-  	border-radius: 5px;
-  	background-color: #fff;
-	transform: rotate(136deg);
-  	position: absolute;
-  	left: 24px;
-  	top: -8px;
 }
