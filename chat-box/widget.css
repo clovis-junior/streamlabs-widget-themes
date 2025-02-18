@@ -2,21 +2,11 @@
 
 *, *:after, *:before { margin: 0; padding: 0; box-sizing: border-box}
 * {
-    outline: 0;
+  	outline: 0;
   	border: none;
   	font-size: 100%;
   	background: transparent;
   	vertical-align: baseline
-}
-
-:root {
-    --badge-size: {badgesSize}px;
-    --emote-size: {emoteSize}px;
-    --message-background-color: #EAEAEA;
-    --message-letter-spacing: 0;
-    --message-font-family: {font}, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    --message-font-weight: 400;
-    --message-font-size: {font_size};
 }
 
 .main-container {
@@ -27,35 +17,26 @@
 	flex-direction: column;
   	justify-content: flex-end;
   	align-items: flex-start;
-  	padding: 1rem 2rem;
-  	position: relative;
-}
-.main-container::after {
-	content: '';
-    width: 100%;
-    height: 100%;
-    box-shadow: 0 0 1rem 1rem transparent inset;
-    position: absolute;
-	right: 0;
-    top: 0;
+    overflow: hidden;
+  	padding: 10px;
+  	scroll-behavior: smooth;
+  	-webkit-mask-image: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 5%, rgba(255,255,255,1) 90%, rgba(255,255,255,0) 100%);
+  	mask-image: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 5%, rgba(255,255,255,1) 90%, rgba(255,255,255,0) 100%);
+  	transition: all 200ms ease
 }
 
 .chat {
-  	--animation: {chatAnimationIn} 200ms ease forwards, {chatAnimationOut} 200ms ease {message_hide_delay} forwards;
-  
+  	z-index: 0;
   	flex: 0 1 auto;
 	display: flex;
 	flex-direction: column;
   	flex-wrap: nowrap;
     align-items: flex-start;
   	margin-bottom: 10px;
-  	font-family: var(--message-font-family);
-  	animation: var(--animation);
-    -webkit-animation: var(--animation);
   	transition: all 100ms linear
 }
 .chat-header {
-  	--height-size: calc(var(--message-font-size) * 1.5);
+  	--height-size: calc({headerFontSize} + 10px);
   
   	flex: 1 0;
   	height: var(--height-size);
@@ -63,59 +44,63 @@
   	flex-wrap: nowrap;
 	flex-direction: row;
 	align-items: center;
-  	border-radius: 10px;
+  	border-radius: 50px;
   	padding: 10px 25px;
-  	background-color: #0F0F0F;
+  	margin-bottom: 5px;
+  	background-image: linear-gradient(0deg, rgba(255,255,255,.32), transparent);
+  	background-color: #111;
   	line-height: var(--height-size);
-  	letter-spacing: var(--message-letter-spacing);
-    font-weight: 600;
-    font-size: calc(var(--message-font-size) * 1.1);
+  	font-family: '{headerFontName}', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  	letter-spacing: {headerLetterSpacing}px;
+  	font-weight: {headerFontWeight};
+	font-size: {headerFontSize}px;
   	color: #fff;
 }
 .chat-user-badges {
-  	flex: 0 0 minmax(var(--emote-size), calc(var(--emote-size) * 4));
-	display: flex;
-  	flex-wrap: nowrap;
-	flex-direction: row;
-	align-items: center;
-  	overflow: hidden;
+  	--badges: 0;
+  
+  	flex: 0 0 calc(24px * var(--badges));
+	display: grid;
+  	grid-template-columns: repeat(var(--badges), 1fr);
+	column-gap: 10px;
 }
 .chat-user-name {
   	flex: 1 0;
   	display: block;
   	overflow: hidden;
   	white-space: nowrap;
-  	padding: 0 5px;
+  	padding: 0 10px;
   	text-overflow: ellipsis;
 }
 .chat-user-badges > * {
-  	width: var(--badge-size);
-  	height: var(--badge-size);
+  	width: 24px;
+  	height: 24px;
   	display: block;
 	object-fit: cover;
 }
-.chat-user-badges > :not(last-child) {
-    margin-right: 10px;
-}
 .chat-message {
-  	min-width: calc(var(--message-font-size) + 24px);
+  	min-width: calc({messageFontSize}px * 4);
   	padding: 20px;
+  	margin: 0 20px;
   	border-radius: 10px;
-	background-color: var(--message-background-color);
+	background-color: #fff;
+  	font-family: '{messageFontName}', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  	box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
   	position: relative
 }
 .chat-message-content {
+  	min-height: calc({messageFontSize}px + 10px);
   	display: flex;
     flex-wrap: wrap;
 	flex-direction: row;
   	justify-content: flex-start;
   	align-items: center;
   	overflow: hidden;
-	line-height: calc(var(--message-font-size) * 2);
-  	letter-spacing: var(--message-letter-spacing);
-  	font-weight: var(--message-font-weight);
-    font-size: var(--message-font-size);
-    color: #1A1A1A1;
+	line-height: calc({messageFontSize}px * 2);
+  	letter-spacing: {messageLetterSpacing}px;
+  	font-weight: {messageFontWeight};
+	font-size: {messageFontSize}px;
+	color: #000;
 }
 .chat-message-content .emote,
 .chat-message-content .mention,
@@ -134,17 +119,9 @@
   	font-weight: 700;
   	background-color: rgba(50,50,240,.1);
 }
-.chat-message-content .emote,
-.chat-message-content .emote > * {
-  	width: var(--emote-size);
- 	height: auto;
-}
 .chat-message-content .emote {
-  	background-size: cover;
-  	background-repeat: no-repeat;
-}
-.chat-message-content .emote > * {
-  	object-fit: cover;
+  	width: {emoteSize}px;
+ 	height: auto;
 }
 .chat-message-content .link {
   	font-weight: 300;
@@ -155,9 +132,9 @@
     height: 24px;
     display: block;
   	border-radius: 5px;
-  	background-color: var(--message-background-color);
+  	background-color: #fff;
 	transform: rotate(136deg);
   	position: absolute;
-  	left: var(--emote-size);
+  	left: 24px;
   	top: -8px;
 }
