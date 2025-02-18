@@ -3,13 +3,13 @@
     "group": "General Settings",
     "label": "Font",
     "type": "fontpicker",
-    "value": "Roboto"
+    "value": "Advent Pro"
   },
   "chatAnimationIn": {
     "group": "General Settings",
     "type": "dropdown",
     "label": "Animation In:",
-    "value": "slideInUp",
+    "value": "fadeInUp",
     "options": {
       "none": "None",
       "bounceIn": "bounceIn",
@@ -51,7 +51,7 @@
     "group": "General Settings",
     "type": "dropdown",
     "label": "Animation Out:",
-    "value": "fadeOut",
+    "value": "fadeOutUp",
     "options": {
       "none": "None",
       "bounceOut": "bounceOut",
