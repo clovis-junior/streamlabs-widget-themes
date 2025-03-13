@@ -1,9 +1,7 @@
-<!-- item will be appened to this layout -->
 <main id="log" class="sl__chat__layout main-container"></main>
 
-<!-- chat item -->
 <script type="text/template" id="chatlist_item">
-  <article class="chat" data-from="{from}" data-id="{messageId}">
+  <article class="chat {chatTheme}" data-from="{from}" data-id="{messageId}">
     <header class="chat-header" style="--color: {color}">
       <div class="chat-user-badges badges"></div>
       <aside class="chat-user-name">{from}</aside>
