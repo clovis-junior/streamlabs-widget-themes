@@ -1,9 +1,19 @@
 {
+  "chatTheme": {
+    "group": "General Settings",
+    "type": "dropdown",
+    "label": "Theme",
+    "value": "dark",
+    "options": {
+      "default": "Default (Light)",
+      "dark": "Dark"
+    }
+  },
   "font": {
     "group": "General Settings",
     "label": "Font",
     "type": "fontpicker",
-    "value": "Advent Pro"
+    "value": "Tomorrow"
   },
   "chatAnimationIn": {
     "group": "General Settings",
@@ -100,7 +110,7 @@
     "group": "General Settings",
     "label": "Badges Size",
     "type": "slider",
-    "value": 22,
+    "value": 28,
     "max": 96,
     "min": 16
   }
